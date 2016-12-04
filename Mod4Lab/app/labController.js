@@ -7,6 +7,21 @@ app.controller('labController', [
 
 	$scope.getRepos = getRepos;
 
+	$scope.loadDetail = loadDetail;
+
+	function loadDetail(name){
+		var url = 'http://api.github.com/repos/angular/' + name;
+		$http.get(url)
+			.then(function(response){
+				$scope.model.detail = response.data;
+			}, function(response){
+				$scope.model.detail = {
+					error: true, 
+					message: 'Error: ' + response.data.message};	
+			}
+			);
+	}
+
 	function getRepos(){
 		$http.get('http://api.github.com/orgs/angular/repos').then(function(response){
 			$scope.model.repos = response.data;
@@ -14,6 +29,7 @@ app.controller('labController', [
 			$scope.model.repos = 'Error: ' + response.data.message;
 		});
 	}
+
 	function checkOddNumber(input){
 		$scope.model.result = 'Working...';
 		
