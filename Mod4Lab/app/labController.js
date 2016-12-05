@@ -1,6 +1,6 @@
 app.controller('labController', [
-    '$scope','$timeout','$q','$http',
-    function ($scope,$timeout,$q,$http) {
+    '$scope','$timeout','$q','$http','gitHub',
+    function ($scope,$timeout,$q,$http, gitHub) {
 	$scope.model = { number:0, result: 'Ready'};
 
 	$scope.checkOddNumber = checkOddNumber;
@@ -10,29 +10,17 @@ app.controller('labController', [
 	$scope.loadDetail = loadDetail;
 
 	function loadDetail(name){
-		var url = 'http://api.github.com/repos/angular/' + name;
-		$http.get(url)
-			.then(function(response){
-				$scope.model.detail = response.data;
-			}, function(response){
-				$scope.model.detail = {
-					error: true, 
-					message: 'Error: ' + response.data.message};	
-			}
-			);
+		$scope.model.detail = null;
+    $scope.model.detail = gitHub.getDetail({id: name});
 	}
 
 	function getRepos(){
-		$http.get('http://api.github.com/orgs/angular/repos').then(function(response){
-			$scope.model.repos = response.data;
-		}, function(response){
-			$scope.model.repos = 'Error: ' + response.data.message;
-		});
+		$scope.model.repos = gitHub.getAll();
 	}
 
 	function checkOddNumber(input){
 		$scope.model.result = 'Working...';
-		
+
 		checkOddNumberHandler(input).then(function(result){
 			$scope.model.result = 'Success: ' + result;
 		}, function(result){
@@ -45,14 +33,14 @@ app.controller('labController', [
 
 		$timeout(function(){
 			if(isNumberOdd(input)){
-				defer.resolve('Yes, an odd number');	
+				defer.resolve('Yes, an odd number');
 			}
 			else{
 				defer.reject('Not an odd number');
 			}
 
 		}, 1000);
-		
+
 		return defer.promise;
 	}
 
