@@ -18,7 +18,8 @@
 						<label>Username</label>
 					</div>
 					<div class="col-md-5">
-						<input type="text" name="username" class="form-control" ng-model="model.username">
+						<input type="text" name="username"  required class="form-control" ng-model="model.username">
+						<div class="alert alert-danger" ng-show="(form.username.$touched || form.$submitted) && form.username.$error.required">Username is required</div>
 					</div>
 				</div>
 
@@ -27,7 +28,8 @@
 						<label>Password</label>
 					</div>
 					<div class="col-md-5">
-						<input type="password" name="password" class="form-control" ng-model="model.password">
+						<input type="password" name="password" required lass="form-control" ng-model="model.password">
+            <div class="alert alert-danger" ng-show="(form.password.$touched || form.$submitted) && form.password.$error.required">Password is required</div>
 					</div>
         </div>
 
@@ -36,7 +38,8 @@
             <label name="name">Name</label>
           </div>
           <div class="col-md-5">
-							<input type="text" name="name" class="form-control" ng-model="model.name">
+							<input type="text" name="name" required class="form-control" ng-model="model.name">
+              <div class="alert alert-danger" ng-show="(form.name.$touched || form.$submitted) && form.name.$error.required">Name is required</div>
 					</div>
         </div>
 
@@ -44,9 +47,9 @@
           <div class="col-md-2">
             <label>Phone Number</label>
           </div>
-          <div class="col-md-5">
-							<input type="number" name="phone" class="form-control" ng-model="model.phone">
-					</div>
+        	  <div class="col-md-5">
+							<input type="number" name="phone" ng-required="required" class="form-control" ng-model="model.phone">
+			  </div>
         </div>
 
         <div class="form-group">
@@ -54,7 +57,7 @@
             <label>Email Address</label>
           </div>
           <div class="col-md-5">
-              <input type="email" name="emailAddress" class="form-control" ng-model="model.email">
+              <input type="email" name="emailAddress"  ng-required="required" class="form-control" ng-model="model.email">
           </div>
         </div>
 
@@ -63,7 +66,7 @@
             <label>Favorite Pizza</label>
           </div>
           <div class="col-md-5">
-            <select name="favorite" class="form-control" ng-model="model.favorite">
+            <select name="favorite" class="form-control" ng-model="model.favorite" ng-required="required" >
               <option>Cheese Pizza</option>
 							<option>Pepperoni Pizza</option>
               <option>Margherita Pizza</option>
