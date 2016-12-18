@@ -1,16 +1,23 @@
 app.controller('labController', [
-    '$scope',
-    function ($scope) {
+    '$scope','registration',
+    function ($scope, registration) {
       $scope.reset = reset;
       $scope.submit = submit;
+
       reset();
+
+      function submit(model){
+        registration.submit(model).$promise
+          .then(function(response){
+            alert('success');
+          },
+          function(refiresponse){
+            alert('error');
+          });
+      }
 
       function reset(){
         $scope.model = {}
-      }
-
-      function submit(){
-        alert('Submitted\n' + JSON.stringify(model));
       }
     }
 ]);
